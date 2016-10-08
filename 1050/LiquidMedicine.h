@@ -17,7 +17,7 @@ class LiquidMedicine{
 		bool medicineMaterialAndCount();
 		bool insertMaterialNameAndPrice();
 		bool inputMedicineMaterial();
-		void makingMedicine();
+		bool makingMedicine();
 		int validateMedicine(int medicine);
 		bool inputRecipe();
 

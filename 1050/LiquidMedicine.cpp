@@ -6,6 +6,7 @@
 #include <string.h>
 #include <string>
 
+#define FAIL -1
 LiquidMedicine::LiquidMedicine()
 {
 	numberOfMeterials = 0;
@@ -40,15 +41,18 @@ void LiquidMedicine::createLiquidMedicine()
 		return;
 	}
 
-	makingMedicine();
-
+	if(!makingMedicine())
+	{
+		cout<<FAIL<<endl;
+		return;
+	}
 	cout<<validateMedicine(meterial[name])<<endl ;
 }
 int LiquidMedicine::validateMedicine(int medicine)
 {
 	return ( medicine > 1000000000 )? 1000000001 : medicine;
 }
-void LiquidMedicine::makingMedicine()
+bool LiquidMedicine::makingMedicine()
 {
 	map<string, vector<string> >::reverse_iterator ritMap = recipes.rbegin();
 	map<string, vector<string> >::reverse_iterator ritEnd = recipes.rend();
@@ -61,12 +65,17 @@ void LiquidMedicine::makingMedicine()
 		{
 			string elem = vec[i];
 			int cnt = atoi((elem.substr(0,1).c_str()));
+			map<string, int>::iterator it = meterial.find(ritMap->first);
+			if( it != meterial.end())
+			{
+				return false;
+			}
 			sum += (cnt*meterial[ritMap->first]);
 		}
 		meterial.insert(make_pair(name, sum) );
 	}
 	name = (--ritMap)->first;
-
+	return true;
 }
 bool LiquidMedicine::inputMedicineMaterial()
 {

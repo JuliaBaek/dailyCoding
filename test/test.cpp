@@ -1,5 +1,6 @@
-all : test
-test : test.cpp
-	gcc -W -Wall -o test test.cpp
-clean :
-	rm -rf test
+#include <stdio.h>
+int main()
+{
+	printf("Hello World\n");
+	return 0;
+}

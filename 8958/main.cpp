@@ -4,10 +4,6 @@
 int main()
 {
 	QuizResult test;
-	if( !test.scoreProcess() )
-	{
-		std::cout<<"FAIL"<<std::endl;
-	}
-	std::cout<<"SUCCESS"<<std::endl;
+	test.scoreProcess();
 	return 0;
 }

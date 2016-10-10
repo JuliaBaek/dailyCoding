@@ -14,7 +14,7 @@ LiquidMedicine::LiquidMedicine()
 }
 bool LiquidMedicine::validatenumberOfMeterialsame(string elem)
 {
-	bool ret = false;
+	bool ret = true;
 	map<string, int>::iterator itMap = meterial.begin();
 	for(  ; itMap!=meterial.end(); itMap++)
 	{
@@ -54,27 +54,26 @@ int LiquidMedicine::validateMedicine(int medicine)
 }
 bool LiquidMedicine::makingMedicine()
 {
-	map<string, vector<string> >::reverse_iterator ritMap = recipes.rbegin();
-	map<string, vector<string> >::reverse_iterator ritEnd = recipes.rend();
-	for( ; ritMap != ritEnd; ritMap++)
+	map<string, vector<string> >::iterator itMap = recipes.begin();
+	map<string, vector<string> >::iterator itEnd = recipes.end();
+	for( ; itMap != itEnd; ++itMap)
 	{
-		string met = ritMap->first;
-		vector<string> vec = ritMap->second;
+		name = itMap->first;
+		vector<string> vec = itMap->second;
 		int sum = 0;
-		for(int i =0; i<(int)vec.size(); i++)
+		for(int i = 0; i<(int)vec.size(); i++)
 		{
-			string elem = vec[i];
-			int cnt = atoi((elem.substr(0,1).c_str()));
-			map<string, int>::iterator it = meterial.find(ritMap->first);
-			if( it != meterial.end())
+			int cnt = atoi((vec[i].substr(0,1).c_str()));
+			string elem = vec[i].substr(1);
+			map<string, int>::iterator it = meterial.find(elem);
+			if( it == meterial.end())
 			{
 				return false;
 			}
-			sum += (cnt*meterial[ritMap->first]);
+			sum += (cnt*meterial[elem]);
 		}
 		meterial.insert(make_pair(name, sum) );
 	}
-	name = (--ritMap)->first;
 	return true;
 }
 bool LiquidMedicine::inputMedicineMaterial()
@@ -107,10 +106,10 @@ bool LiquidMedicine::inputRecipe()
 		char* pch;
 		pch = strtok( recipe, "=");
 		name = pch;
-		pch = strtok( recipe, "+");
+		pch = strtok( NULL, "+");
 		while( pch != NULL )
 		{
-			recipes[pch].push_back(pch);
+			recipes[name].push_back(pch);
 			pch = strtok( NULL, "+");
 		}
 	}
@@ -134,7 +133,8 @@ bool LiquidMedicine::insertMaterialNameAndPrice()
 	int price = 0;
 	for(int i=0; i<numberOfMeterials; i++)
 	{
-		cin>>name>>price;
+		cin>>name;
+		cin>>price;
 		if(!validatenumberOfMeterialsame(name))
 		{
 			ret = false;

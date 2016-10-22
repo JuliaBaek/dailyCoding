@@ -1,23 +1,4 @@
-#include <stdio.h>
-#include <vector>
-
-using namespace std;
-class LengthOfTheStick
-{
-	public:
-		LengthOfTheStick();
-		~LengthOfTheStick();
-		void inputData();
-
-	private:
-		int calculator();
-		void print();
-		void makeStickLength();
-
-		int stickSize;
-		int cnt;
-		vector<int> newStick;
-};
+#include"LengthOfTheStick.h"
 
 LengthOfTheStick::LengthOfTheStick()
 {
@@ -28,7 +9,9 @@ LengthOfTheStick::LengthOfTheStick()
 LengthOfTheStick::~LengthOfTheStick()
 {
 	if( !newStick.empty() )
+	{
 		newStick.clear();
+	}
 }
 int LengthOfTheStick::calculator()
 {
@@ -86,10 +69,4 @@ void LengthOfTheStick::inputData()
 void LengthOfTheStick::print()
 {
 	printf("%d\n", cnt);
-}
-int main()
-{
-	LengthOfTheStick* stick = new LengthOfTheStick() ;
-	stick->inputData();
-	return 0;
 }

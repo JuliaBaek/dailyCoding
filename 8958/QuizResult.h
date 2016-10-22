@@ -1,7 +1,7 @@
 #ifndef __QUIZ_RESULT_H__
 #define __QUIZ_RESULT_H__
 #include <iostream>
-#include <map>
+#include <deque>
 #include <string>
 #include <string.h>
 
@@ -15,9 +15,8 @@ class QuizResult
 	private:
 		bool inputCountAndAnswers();
 		void printScoreOfQuiz();
-		void validateAnswer();
 		int calculator( std::string answer );
 
-		std::map< std::string, int> scoreMap;
+		std::deque< std::string > score;
 };
 #endif

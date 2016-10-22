@@ -2,11 +2,11 @@
 
 QuizResult::QuizResult()
 {
-	scoreMap.clear();
+	score.clear();
 }
 QuizResult::~QuizResult()
 {
-	scoreMap.clear();
+	score.clear();
 }
 bool QuizResult::scoreProcess()
 {
@@ -14,7 +14,6 @@ bool QuizResult::scoreProcess()
 	{
 		return false;
 	}
-	validateAnswer();
 	printScoreOfQuiz();
 	return true;
 }
@@ -40,22 +39,10 @@ bool QuizResult::inputCountAndAnswers()
 			ret = false;
 			break;
 		}
-		scoreMap.insert( std::pair<std::string, int>( str, 0 ));	
+		score.push_back( str );
 	}
 	return ret;
 }
-
-void QuizResult::validateAnswer()
-{
-	std::map< std::string, int>::iterator it = scoreMap.begin();
-	std::map< std::string, int>::iterator itEnd = scoreMap.end();
-
-	for( ; it!=itEnd; ++it )
-	{
-		it->second = calculator( it->first );	
-	}
-}
-
 int QuizResult::calculator( std::string answer )
 {
 	int i = 0;
@@ -63,7 +50,7 @@ int QuizResult::calculator( std::string answer )
 	int score = 0;
 	while( answer[i] != '\0' )
 	{
-		switch( toupper(answer[i]) )
+		switch( answer[i] )
 		{
 			case 'O' :
 				score ++;
@@ -75,16 +62,16 @@ int QuizResult::calculator( std::string answer )
 				break;
 		}
 		result += score;
+		i++;
 	}	
 	return result;
 }
 void QuizResult::printScoreOfQuiz()
 {
-	std::map< std::string, int>::iterator it = scoreMap.begin();
-	std::map< std::string, int>::iterator itEnd = scoreMap.end();
+	std::deque< std::string >::iterator it = score.begin();
 
-	for( ; it!=itEnd; it++)
+	for( ; it < score.end() ; it++ )
 	{
-		std::cout<< it->second<<std::endl;	
+		std::cout<< calculator( *it )<<std::endl;
 	}
 }
